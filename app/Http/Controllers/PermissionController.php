@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PermissionStoreRequest;
 use App\Http\Requests\PermissionUpdateRequest;
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -15,7 +16,7 @@ class PermissionController extends Controller
     public function index()
     {
         return view('permission.index')
-            ->with('permissions', Permission::paginate());
+            ->with('permissions', Permission::all());
     }
 
     /**
@@ -23,7 +24,9 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permission.create');
+        $roles= Role::all();
+        return view('permission.create')
+            ->with('roles', $roles);
     }
 
     /**
@@ -31,7 +34,8 @@ class PermissionController extends Controller
      */
     public function store(PermissionStoreRequest $request)
     {
-        Permission::create($request->validated());
+        $permission = Permission::create($request->validated());
+        $permission->roles()->sync($request->role_id);
         return redirect(route('permission.index'));
     }
 
@@ -49,8 +53,10 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        $roles= Role::all();
         return view('permission.edit')
-            ->with('permission', $permission);
+            ->with('permission', $permission->load('roles'))
+            ->with('roles', $roles);
     }
 
     /**
@@ -58,7 +64,10 @@ class PermissionController extends Controller
      */
     public function update(PermissionUpdateRequest $request, Permission $permission)
     {
+
         $permission->update($request->validated());
+        $permission->roles()->detach();
+        $permission->roles()->sync($request->role_id);
         return redirect(route('permission.index'));
     }
 

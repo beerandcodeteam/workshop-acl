@@ -15,7 +15,7 @@ class ContentController extends Controller
     public function index()
     {
         return view('content.index')
-            ->with('contents', Content::paginate());
+            ->with('contents', Content::all());
     }
 
     /**

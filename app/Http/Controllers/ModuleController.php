@@ -15,7 +15,7 @@ class ModuleController extends Controller
     public function index()
     {
         return view('module.index')
-            ->with('modules', Module::paginate());
+            ->with('modules', Module::all());
     }
 
     /**
