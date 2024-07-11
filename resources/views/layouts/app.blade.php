@@ -95,6 +95,12 @@
                                        tabindex="-1" id="user-menu-item-0">Your profile</a>
                                     <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem"
                                        tabindex="-1" id="user-menu-item-1">Sign out</a>
+
+                                    <span class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">Tom Cook</span>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem">logout</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

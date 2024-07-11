@@ -14,11 +14,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::resource('role', \App\Http\Controllers\RoleController::class);
     Route::resource('permission', \App\Http\Controllers\PermissionController::class);
     Route::resource('content', \App\Http\Controllers\ContentController::class);
-    Route::resource('module', \App\Http\Controllers\ModuleController::class);
+    Route::resource('module', \App\Http\Controllers\ModuleController::class)
+        ->middleware(\App\Http\Middleware\AuthorizeResource::class);
     Route::resource('comment', \App\Http\Controllers\CommentController::class);
     Route::get('comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 

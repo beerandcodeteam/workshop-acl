@@ -6,6 +6,7 @@ use App\Http\Requests\ModuleStoreRequest;
 use App\Http\Requests\ModuleUpdateRequest;
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ModuleController extends Controller
 {
